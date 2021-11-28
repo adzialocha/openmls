@@ -26,7 +26,7 @@ use crate::ciphersuite::signable::{Signable, SignedStruct, Verifiable, VerifiedS
 use super::*;
 use openmls_traits::OpenMlsCryptoProvider;
 use std::convert::TryFrom;
-use tls_codec::{Serialize, Size, TlsByteVecU32, TlsDeserialize, TlsSerialize, TlsSize};
+use tls_codec::{Serialize, TlsByteVecU32, TlsDeserialize, TlsSerialize, TlsSize};
 
 /// `MLSPlaintext` is a framing structure for MLS messages. It can contain
 /// Proposals, Commits and application messages.
@@ -578,6 +578,12 @@ impl VerifiableMlsPlaintext {
     /// Get the group id as [`GroupId`].
     pub(crate) fn group_id(&self) -> &GroupId {
         &self.tbs.group_id
+    }
+
+    /// Set the group id.
+    #[cfg(test)]
+    pub(crate) fn set_group_id(&mut self, group_id: GroupId) {
+        self.tbs.group_id = group_id;
     }
 
     /// Set the serialized context before verifying the signature.
